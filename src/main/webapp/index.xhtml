@@ -34,12 +34,8 @@
                     <tbody>
                     <c:forEach var="uu" items="#{userService.users}">
                         <tr>
-                            <td>
-                                <h:outputText value="#{uu.name}"/>
-                            </td>
-                            <td>
-                                <h:outputText value="#{uu.password}"/>
-                            </td>
+                            <td><h:outputText value="#{uu.name}"/></td>
+                            <td><h:outputText value="#{uu.password}"/></td>
                             <td>
                                 <h:commandButton value="edit" type="button" styleClass="btn btn-secondary"
                                                  onclick="toggleMyModal({name: '#{uu.name}', password: '#{uu.password}'})"/>
@@ -76,7 +72,6 @@
                                  class="btn btn-primary"/>
             </h:form>
         </div>
-
     </div>
 
     <!-- Modal -->
@@ -93,7 +88,8 @@
                         <div class="mb-3 row">
                             <h:outputLabel for="username" class="form-label col-sm-2">Username</h:outputLabel>
                             <div class="col-sm-4">
-                                <h:inputText id="changePassword-username-readonly-fld" class="form-control" readonly="true"/>
+                                <h:inputText id="changePassword-username-readonly-fld" class="form-control"
+                                             readonly="true"/>
                             </div>
 
                         </div>
@@ -107,7 +103,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <h:commandButton styleClass="btn btn-primary" value="Save" action="#{userService.changePassword(user)}"/>
+                        <h:commandButton styleClass="btn btn-primary" value="Save"
+                                         action="#{userService.changePassword(user)}"/>
                     </div>
                 </h:form>
             </div>

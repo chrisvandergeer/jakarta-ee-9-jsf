@@ -4,40 +4,41 @@ import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Named("userService")
 @ApplicationScoped
 public class UserService {
 
-    private List<User> users;
+    private Map<String, User> users;
 
     @PostConstruct
     void init() {
-        users = new ArrayList<>();
-        users.add(new User("Chris", "********"));
-        users.add(new User("Duke", "J@v@"));
-        users.add(new User("Teun", "V03d53l"));
+        users = new LinkedHashMap<>();
+        Stream.of(
+                        new User("Chris", "********"),
+                        new User("Duke", "J@v@"),
+                        new User("Teun", "V03d53l"))
+                .forEach(user -> users.put(user.getName(), user));
     }
 
     public List<User> getUsers() {
-        return users;
+        return new ArrayList<>(users.values());
     }
 
     public void addUser(User user) {
-        this.users.add(new User(user.getName(), user.getPassword()));
+        if (!users.containsKey(user.getName())) {
+            this.users.put(user.getName(), new User(user.getName(), user.getPassword()));
+        }
     }
 
     public void deleteUser(User user) {
-        this.users.remove(user);
+        this.users.remove(user.getName());
     }
 
     public void changePassword(User user) {
-        this.users.stream()
-                .filter(u -> u.getName().equals(user.getName()))
-                .findAny()
-                .ifPresent(u -> u.setPassword(user.getPassword()));
+        Optional.ofNullable(users.get(user.getName())).ifPresent(u -> u.setPassword(user.getPassword()));
     }
 
 }
