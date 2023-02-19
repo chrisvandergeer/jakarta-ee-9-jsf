@@ -89,13 +89,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <f:event type="preRenderView" listener="#{user.reset()}"></f:event>
+                        <h:inputHidden id="changePassword-username-fld" value="#{user.name}" class="form-control"/>
                         <div class="mb-3 row">
                             <h:outputLabel for="username" class="form-label col-sm-2">Username</h:outputLabel>
                             <div class="col-sm-4">
-                                <h:inputText id="changePassword-username-fld" value="#{user.name}"
-                                             class="form-control"/>
+                                <h:inputText id="changePassword-username-readonly-fld" class="form-control" readonly="true"/>
                             </div>
+
                         </div>
                         <div class="mb-3 row">
                             <h:outputLabel for="password" class="form-label col-sm-2">Password</h:outputLabel>
@@ -106,7 +106,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <h:commandButton styleClass="btn btn-primary" value="Save" action="#{userService.changePassword(user)}"/>
                     </div>
                 </h:form>
@@ -116,6 +116,7 @@
 
     <script type="text/javascript">
         function toggleMyModal(user) {
+            document.getElementById('editUserForm:changePassword-username-readonly-fld').value = user.name;
             document.getElementById('editUserForm:changePassword-username-fld').value = user.name;
             document.getElementById('editUserForm:changePassword-password-fld').value = user.password;
             var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {
